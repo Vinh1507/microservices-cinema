@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <title>Document</title>
+    <style>
+        .df {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .movie-container {
+            margin-top: 30px;
+        }
+        .schedule {
+        	margin-top: 30px;
+        }
+    </style>
+    <title>Document</title>
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+	  <a class="navbar-brand" href="/">Cinema</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+	
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Phim đang chiếu <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Phim sắp chiếu <span class="sr-only">(current)</span></a>
+	      </li>
+	    </ul>
+	  </div>
+	</nav>
+    <div class="container movie-container">
+        <h1 th:text="'Phim ' + ${movieDetail.getTitle()}"></h1>
+		<h2 th:text="'Mô tả: ' + ${movieDetail.getDescription()}"></h2>
+		<h3 class="schedule">Danh sách các suất chiếu</h3>
+	    <table class="table table-striped">
+		  <thead>
+		    <tr>
+		      <th scope="col">#</th>
+		      <th scope="col">Room</th>
+		      <th scope="col">Schedule</th>
+		      <th scope="col">Action</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr th:each="schedule : ${movieShowSchedules}">
+                <td th:text="${schedule.id}"></td>
+                <td>
+                    <span th:text="${schedule.room.getType()}"></span> -
+                    <span th:text="${schedule.room.getPosition()}"></span>
+                </td>
+                <td th:text="${schedule.schedule.getStartTime()} + ' - ' + ${schedule.schedule.getEndTime()}"></td>
+                <td>
+                    <a th:href="@{'/movie-show-schedule-detail/' + ${schedule.id}}" class="btn btn-success">View</a>
+                </td>
+            </tr>
+		  </tbody>
+		</table>
+    </div>
+</body>
+</html>

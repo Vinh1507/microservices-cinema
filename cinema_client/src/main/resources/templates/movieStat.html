@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .manager-container {
+        margin-top: 30px;
+      }
+
+      .movie-cb {
+        height: 20px;
+        width: 20px;
+      }
+
+      .df {
+        display: flex;
+      }
+
+      .f7 {
+        flex: 7;
+      }
+
+      .f3 {
+        flex: 3;
+        padding: auto 20px !important;
+        padding-left: 50px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="manager-container container">
+      <h3>Thống kê doanh thu theo phim</h3>
+      <h3 th:text="${start} + ' --> ' + ${end}"></h3>
+      <div class="">
+        <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+                <th scope="col">Revenue</th>
+                <th scope="col">Total Tickets</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr th:each="movieStat : ${movieStatList}">
+                <td scope="row" th:text="${movieStat.getMovie().getId()}"></td>
+                <td th:text="${movieStat.getMovie().getTitle()}"></td>
+                <td th:text="${#numbers.formatDecimal(movieStat.getRevenue(), 0, 'COMMA', 2, 'POINT')}"></td>
+                <td th:text="${movieStat.getTotalTickets()}"></td>
+                <td><a th:href="'/movie-show-schedule-stat?movieId=' + ${movieStat.getMovie().getId()}" class="btn btn-success">View</a></td>
+            </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

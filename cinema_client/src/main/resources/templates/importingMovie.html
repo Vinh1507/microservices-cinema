@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .manager-container {
+        margin-top: 30px;
+      }
+
+      .movie-cb {
+        height: 20px;
+        width: 20px;
+      }
+
+      .df {
+        display: flex;
+      }
+
+      .f7 {
+        flex: 7;
+      }
+
+      .f3 {
+        flex: 3;
+        padding: auto 20px !important;
+        padding-left: 50px;
+      }
+      
+      .total {
+      	margin-top: 30px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+      integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <form method="post" action="/handle-import-bill" class="manager-container container">
+      <h2>Nhập phim</h2>
+      <div class="df">
+      	<div class="f7">
+      	<h3>Danh sách phim</h3>
+	        <table class="table table-striped">
+	            <thead>
+	              <tr>
+	                <th scope="col">#</th>
+	                <th scope="col">Title</th>
+	                <th scope="col">Category</th>
+	                <th scope="col">Description</th>
+	                <th scope="col">Price</th>
+	              </tr>
+	            </thead>
+	            <tbody>
+	              <tr th:each="movie : ${importingMovieList}">
+	                <th scope="row">
+	                    <input name="movieId" th:value="${movie.getId()}" class="movie-cb" type="checkbox">
+	                </th>
+	                <td th:text="${movie.title}"></td>
+	                <td th:text="${movie.category}"></td> <!-- Assuming the Movie class has a 'title' field -->
+	                <td th:text="${movie.description}"></td>
+	                <td class="price" th:text="${#numbers.formatDecimal(movie.price, 0, 'COMMA', 2, 'POINT')}"></td>
+	              </tr>
+	            </tbody>
+	          </table>
+          </div>
+          <div class="f3">
+          	<h3>Nhà cung cấp phim</h3>
+            <select class="form-select" aria-label="Chọn Nhà cung cấp phim" name="supplierId">
+                <option th:each="supplier : ${supplierList}" th:value="${supplier.id}" th:text="${supplier.getContact()}"></option>
+             </select>
+             <h3 class="total">Total: 0</h3>
+          </div>
+      </div>
+      
+      <button type="submit" class="btn btn-success">Nhập phim</button>
+    </form>
+    <script
+      src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-Fy6S3B9q64WdZWQUiU+q4/2Lc9npb8tCaSX9FK7E8HnRr0Jz8D6OP9dO5Vg3Q9ct"
+      crossorigin="anonymous"
+    ></script>
+    <script>
+    	function keepOnlyDigits(str) {
+    	  // Sử dụng regex để tìm các chữ số trong chuỗi và gom chúng lại thành một chuỗi
+    	  let stringWithoutDots = str.replace(/\,/g, '');
+    	  return parseInt(stringWithoutDots);
+    	}
+    	const checkboxes = document.querySelectorAll('.movie-cb');
+    	const prices = document.querySelectorAll('.price');
+    	const totalEle = document.querySelector('.total');
+    	
+    	checkboxes.forEach(checkbox => {
+    	    checkbox.addEventListener('change', function() {
+    	    	let total = 0;
+    	    	checkboxes.forEach((item, index) => {
+    	    		if(item.checked){
+    	    			total += keepOnlyDigits(prices[index].innerHTML.trim());
+    	    		}
+    	    	})
+    	    	let formattedAmount = total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' });
+    	    	totalEle.innerHTML = 'Total: ' + formattedAmount;
+    	    });
+    	});
+    </script>
+  </body>
+</html>
