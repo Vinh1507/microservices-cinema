@@ -1,0 +1,14 @@
+apiVersion: "v1"
+kind: Service
+metadata:
+  name: server-movie-show
+spec:
+  selector:
+    app: server-movie-show
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8082
+      nodePort: 32082
+  type: NodePort
+

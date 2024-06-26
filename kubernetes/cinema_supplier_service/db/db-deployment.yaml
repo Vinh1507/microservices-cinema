@@ -1,0 +1,23 @@
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: cinema-supplier-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cinema-supplier-db
+  template:
+    metadata:
+      labels:
+        app: cinema-supplier-db
+    spec:
+      containers:
+        - name: cinema-supplier-db
+          image: mysql:8.0.20  
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456789" 
+          ports:
+            - containerPort: 3306
+

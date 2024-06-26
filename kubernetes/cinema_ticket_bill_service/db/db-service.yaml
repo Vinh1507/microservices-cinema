@@ -1,0 +1,14 @@
+apiVersion: "v1"
+kind: Service
+metadata:
+  name: cinema-ticket-bill-db
+spec:
+  selector:
+    app: cinema-ticket-bill-db
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
+      nodePort: 32004
+  type: NodePort
+

@@ -1,0 +1,23 @@
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: cinema-importing-bill-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cinema-importing-bill-db
+  template:
+    metadata:
+      labels:
+        app: cinema-importing-bill-db
+    spec:
+      containers:
+        - name: cinema-importing-bill-db
+          image: mysql:8.0.20  
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456789" 
+          ports:
+            - containerPort: 3306
+

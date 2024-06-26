@@ -1,0 +1,23 @@
+apiVersion: "apps/v1"
+kind: Deployment
+metadata:
+  name: cinema-user-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cinema-user-db
+  template:
+    metadata:
+      labels:
+        app: cinema-user-db
+    spec:
+      containers:
+        - name: cinema-user-db
+          image: mysql:8.0.20  
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: "123456789" 
+          ports:
+            - containerPort: 3306
+
