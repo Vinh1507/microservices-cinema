@@ -1,4 +1,4 @@
-# Project microservices với Spring boot và kubernetes
+# Project quản lý rạp chiếu phim với mô hình microservices sử dụng Spring boot và Kubernetes
 
 ## Hệ thống bao gồm các dịch vụ:
 - cinema_client: Dịch vụ hiển thị giao diện cho người dùng
